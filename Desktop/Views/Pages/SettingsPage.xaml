@@ -1,0 +1,685 @@
+﻿<Page
+    x:Class="Desktop.Views.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Desktop.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="SettingsPage"
+    d:DesignHeight="650"
+    d:DesignWidth="1255"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel Margin="42,0,42,42">
+            <TextBlock Margin="0,0,0,20" FontSize="22" FontWeight="Medium" Text="设置" />
+            <!--顶部按钮-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ui:Button Grid.Column="0" Margin="0,0,0,10" Content="保存全部" FontSize="20" HorizontalAlignment="Left" Icon="{ui:SymbolIcon Save20}" Click="Config_Save_Button_Click"/>
+
+
+
+                <ui:TextBlock Name="SaveTips" Grid.Column="1" Margin="10,8,0,0"  FontSize="16" FontTypography="Body" HorizontalAlignment="Left"  Text="请注意：未保存退出当前页面将丢失已修改内容" />
+                
+                
+                
+                
+                <ui:Button Grid.Column="2" Margin="0,0,0,10" Content="检查更新" FontSize="20" HorizontalAlignment="Right" Icon="{ui:SymbolIcon DocumentHeaderArrowDown20}" Click="CheckForUpdates_Click"/>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--基础设置-->
+                <ui:CardExpander Grid.Row="0" Icon="{ui:SymbolIcon AppFolder20}">
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="DDTV基础设置" />
+                            <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="DDTV运行的基础配置内容" />
+                        </Grid>
+                    </ui:CardExpander.Header>
+                    <StackPanel Margin="24,0.5,24,0">
+                        <ui:CardExpander Grid.Row="0" Icon="{ui:SymbolIcon DatabaseArrowRight24}">
+                            <ui:CardExpander.Header>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="连接远程DDTV5 Server" />
+                                    <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="不是用本Destop自带的服务端，而使用远程服务器" />
+                                    <ui:ToggleSwitch Name="DesktopRemoteServer_SwitchControl" IsChecked="{Binding _DesktopRemoteServer, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
+                                </Grid>
+                            </ui:CardExpander.Header>
+                            <StackPanel Margin="24,0.5,24,0">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Margin="0,0,10,0" Content="远程服务器地址" />
+                                    <ui:TextBox Name="DesktopIP_InputControl" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0" PlaceholderText="http://127.0.0.1" Text="{Binding _DesktopIP, Mode=OneWay}"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Content="远程服务器端口(Port)" />
+                                    <ui:NumberBox Name="DesktopPort_InputControl" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" PlaceholderText="11419" Minimum="1" Maximum="65535" Text="{Binding _DesktopPort, Mode=OneWay}"/>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Margin="0,10,10,0" Content="远程服务器AccessKeyId" />
+                                    <ui:TextBox Name="DesktopAccessKeyId_InputControl" Grid.Row="3" Grid.Column="0" Margin="0,0,10,0" Text="{Binding _DesktopAccessKeyId, Mode=OneWay}"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Margin="10,10,0,0" Content="远程服务器AccessKeySecret" />
+                                    <ui:TextBox Name="DesktopAccessKeySecret_InputControl" Grid.Row="3" Grid.Column="1" Margin="10,0,0,0" Text="{Binding _DesktopAccessKeySecret, Mode=OneWay}"/>
+                                </Grid>
+                            </StackPanel>
+                        </ui:CardExpander>
+                        <ui:CardControl Padding="20,10,20,10" Header="缩小主窗口时的默认行为" Icon="{ui:SymbolIcon ArrowExit20}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                    <ComboBox Name="ZoomOutMode_ComboBox" Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding _ZoomOutMode,Mode=OneWay}" Margin="0,0,5,0">
+                                        <ComboBoxItem Content="缩小到任务栏"/>
+                                        <ComboBoxItem Content="缩小到后台托盘" />
+                                    </ComboBox>
+                                </Grid>
+                            </Grid>
+                        </ui:CardControl>
+
+                        <ui:CardControl Padding="20,10,20,10" Header="接收开发版更新　（新功能功能优先推送）" Icon="{ui:SymbolIcon DeveloperBoardLightningToolbox20}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                    <ui:ToggleSwitch Name="DevelopmentVersion_ToggleSwitch" Height="35" IsChecked="{Binding _DevelopmentVersion, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
+                                </Grid>
+                            </Grid>
+                        </ui:CardControl>
+
+                        <ui:CardControl Padding="20,10,20,10" Header="开播系统卡片提醒" Icon="{ui:SymbolIcon MegaphoneLoud28}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                    <ui:ToggleSwitch Name="SystemCardReminder_ToggleSwitch" Height="35" IsChecked="{Binding _SystemCardReminder, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
+                                </Grid>
+                            </Grid>
+                        </ui:CardControl>
+
+                        <ui:CardExpander Icon="{ui:SymbolIcon Send20}">
+                            <ui:CardExpander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="WebHook" />
+                                        <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="将DDTV产生的关键事件通过Post请求推送到目标URL地址" />
+                                        <ui:ToggleSwitch Name="WebHook_SwitchControl" IsChecked="{Binding _WebHookSwitch, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
+                                    </Grid>
+                                    
+                                </Grid>
+                            </ui:CardExpander.Header>
+                            <StackPanel Margin="24,0.5,24,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Content="需要推送到的目标WebHook地址" />
+                                    <ui:TextBox Name="WebHookUrl_InputControl" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0" Text="{Binding _WebHookAddress, Mode=OneWay}" ToolTipService.InitialShowDelay="100" ToolTipService.Placement="MousePoint" ToolTipService.ToolTip="请使用完整Url地址，例如:【http://127.0.0.1:11419】"/>
+                                </Grid>
+                            </StackPanel>
+                        </ui:CardExpander>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"  Margin="10,10,0,0" Content="使用的API地址【如无接口代理或不熟悉请勿修改】" />
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ui:CardControl Grid.Column="0" Padding="20,10,20,10" Header="主站API">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                            <ui:TextBox Name="MainDomainName_TextBox" Grid.Row="1" Grid.Column="0" Width="300" Margin="0,0,10,0" PlaceholderText="https://api.bilibili.com" Text="{Binding _MainDomainName, Mode=OneWay}"/>
+                                        </Grid>
+                                    </Grid>
+                                </ui:CardControl>
+                                <ui:CardControl Grid.Column="1" Padding="20,10,20,10" Header="直播API">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                            <ui:TextBox Name="LiveDomainName_TextBox" Grid.Row="1" Grid.Column="0" Width="300" Margin="0,0,10,0" PlaceholderText="https://api.live.bilibili.com" Text="{Binding _LiveDomainName, Mode=OneWay}"/>
+                                        </Grid>
+                                    </Grid>
+                                </ui:CardControl>
+                            </Grid>
+                        </Grid>
+                        
+
+
+                    </StackPanel>
+                </ui:CardExpander>
+                <!--文件和路径设置-->
+                <ui:CardExpander Grid.Row="1" Icon="{ui:SymbolIcon Folder16}">
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="文件和路径设置" />
+                            <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="关于DDTV工作相关的路径设置内容。" />
+                        </Grid>
+                    </ui:CardExpander.Header>
+                    <StackPanel Margin="24,0.5,24,0">
+                        <ui:CardControl Padding="20,10,20,10" Header="在资源管理器中打开录制文件夹">
+                            <ui:Button Content="打开" Click="OpenRecordingFolderInExplorer_Click"/>
+                        </ui:CardControl>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Margin="0,10,10,0" FontSize="14" FontWeight="Medium" Text="当前录制文件示例：" />
+                            <TextBlock Grid.Column="1" Margin="0,10,0,0" FontSize="14" FontWeight="Medium" Text="{Binding PathExample, Mode=OneWay}" TextWrapping="Wrap"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"  Margin="10,10,0,0" Content="录制文件保存路径" />
+                            <ui:TextBox  Grid.Row="1" Grid.Column="0" Name="RecPathInputBox" Margin="0,0,30,0"  Text="{Binding _RecFileDirectory, Mode=OneWay}"/>
+                            <ui:Button Grid.Row="1" Grid.Column="1" Margin="0,0,20,0" Content="选择文件夹" Click="SelectRecordingFolder_Click"/>
+                        </Grid>
+                        <ui:Button Margin="0,10,10,0"  Content="查看可用格式" Click="ViewFileFormatExamples_Click"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"  Margin="10,10,0,0" Content="默认一级主播文件夹名称格式" />
+                            <ui:TextBox  Grid.Row="1" Grid.Column="0" Name="DefaultLiverFolderNameInputBox" Margin="0,0,30,0"  Text="{Binding _DefaultLiverFolderName, Mode=OneWay}"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"  Margin="10,10,0,0" Content="默认二级日期文件夹名称格式" />
+                            <ui:TextBox  Grid.Row="1" Grid.Column="0" Name="DefaulFolderNameFormatInputBox" Margin="0,0,30,0"  Text="{Binding _DefaultDataFolderName, Mode=OneWay}"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"  Margin="10,10,0,0" Content="默认文件名称格式" />
+                            <ui:TextBox  Grid.Row="1" Grid.Column="0" Name="DefaulFileNameFormatInputBox" Margin="0,0,30,0"  Text="{Binding _DefaultFileName, Mode=OneWay}"/>
+                        </Grid>
+                    </StackPanel>
+
+                </ui:CardExpander>
+                <!--登录态相关设置-->
+                <ui:CardExpander Grid.Row="2" Icon="{ui:SymbolIcon PersonTag28}">
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="登录态设置" />
+                            <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="设置用于访问接口和页面时所使用的身份信息" />
+                        </Grid>
+                    </ui:CardExpander.Header>
+                    <StackPanel Margin="24,0,24,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid  Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" FontSize="14" FontWeight="Medium" Text="当前已登陆UID：" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" FontSize="14" FontWeight="Medium" Text="{Binding _CurrentLoginStatus}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            </Grid>
+                            <Grid  Grid.Row="0">
+                                <ui:Button Grid.Column="0" Content="打开扫码窗重新登陆" VerticalAlignment="Center" HorizontalAlignment="Right" Click="ReLogin_Button_ClickAsync"/>
+                            </Grid>
+                            <Grid  Grid.Row="1">
+                                <TextBlock Grid.Row="1" Grid.Column="0" FontSize="14" FontWeight="Medium" Text="注：随账号在其他设备上的操作，可能会提前触发过期" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+
+                </ui:CardExpander>
+                <!--录制功能设置-->
+                <ui:CardExpander Grid.Row="3" Icon="{ui:SymbolIcon Record16}">
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="录制功能设置" />
+                            <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="设置会影响录制功能的各种参数和配置" />
+                        </Grid>
+                    </ui:CardExpander.Header>
+
+                    <StackPanel Margin="24,0,24,0">
+
+                        <ui:CardControl Padding="15,15,20,15" Header="默认录制清晰度等级" Icon="{ui:SymbolIcon EyeTracking20}" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right" ToolTipService.InitialShowDelay="100" ToolTipService.Placement="MousePoint" ToolTipService.ToolTip="如无目标分辨率，会使用接近的分辨率进行录制">
+                                    <ComboBox Name="DefaultResolution_For_ComboBox" Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding _DefaultResolution_For_ComboBox,Mode=OneWay}" Margin="0,0,5,0">
+                                        <ComboBoxItem Content="流畅"/>
+                                        <ComboBoxItem Content="高清" />
+                                        <ComboBoxItem Content="超清" />
+                                        <ComboBoxItem Content="蓝光" />
+                                        <ComboBoxItem Content="原画" />
+                                        <ComboBoxItem Content="4K" />
+                                        <ComboBoxItem Content="杜比" />
+                                    </ComboBox>
+                                </Grid>
+                            </Grid>
+                        </ui:CardControl>
+
+                        <ui:CardExpander Icon="{ui:SymbolIcon Voicemail24}">
+                            <ui:CardExpander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="录制模式" />
+                                        <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="在HLS和FLV和混合模式中选择" />
+                                    </Grid>
+                                    <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                        <ComboBox Name="RecordingMode_ComboBox" Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding RecordingMode_For_ComboBox,Mode=OneWay}" Margin="0,0,5,0">
+                                            <ComboBoxItem Content="混合模式(HLS优先)"/>
+                                            <ComboBoxItem Content="仅FLV模式" />
+                                            <ComboBoxItem Content="仅HLS模式" />
+                                        </ComboBox>
+                                    </Grid>
+                                </Grid>
+                            </ui:CardExpander.Header>
+                            <StackPanel Margin="24,0.5,24,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Content="创建任务时为HLS的等待时间(秒)" />
+                                    <ui:NumberBox Name="HlsWaitingTime_InputControl" Grid.Row="1" Grid.Column="0" Margin="10,0,0,0" Width="150" HorizontalAlignment="Left" PlaceholderText="30" Minimum="15" Maximum="300" Text="{Binding _HlsWaitingTime, Mode=OneWay}"/>
+                                </Grid>
+                            </StackPanel>
+                        </ui:CardExpander>
+
+                        <ui:CardExpander Icon="{ui:SymbolIcon ArrowSyncCheckmark20}">
+                            <ui:CardExpander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="自动转码" />
+                                        <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="录制完成自动修复和转码" />
+                                    </Grid>
+                                    <ui:ToggleSwitch Name="AutomaticRepair_SwitchControl" IsChecked="{Binding _AutomaticRepair, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
+                                </Grid>
+                            </ui:CardExpander.Header>
+                            <StackPanel Margin="24,0,24,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0"  Margin="10,0,0,0" Content="修复和转码的执行参数"/>
+                                    <ui:TextBox  Grid.Row="1" Grid.Column="0" Name="AutomaticRepair_Arguments_InputBox" Margin="0,0,0,0"  Text="{Binding _AutomaticRepair_Arguments, Mode=OneWay}" ToolTipService.InitialShowDelay="100" ToolTipService.Placement="MousePoint" ToolTipService.ToolTip="请使用&quot;{before}&quot;来标识原始文件，使用&quot;{after}&quot;来标识输出文件，默认为：&#x0a;-y -i &quot;{before}&quot; -c copy &quot;{after}&quot;"/>
+                                </Grid>
+                            </StackPanel>
+                        </ui:CardExpander>
+                        <ui:CardExpander Icon="{ui:SymbolIcon Cut20}">
+                            <ui:CardExpander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="自动裁切" />
+                                        <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="达到单个文件大小或者单个文件录制时长后自动分割文件" />
+                                    </Grid>
+                                
+                                </Grid>
+                            </ui:CardExpander.Header>
+                            <StackPanel Margin="24,0.5,24,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <ui:CardControl Grid.Row="0" Padding="20,10,20,10" Header="达到设置大小自动分割文件" Icon="{ui:SymbolIcon ScreenCut20}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                                <ComboBox Name="CutAccordingToSize_For_ComboBox" Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding CutAccordingToSize_For_ComboBox,Mode=OneWay}" Margin="0,0,5,0">
+                                                    <ComboBoxItem Content="不分割"/>
+                                                    <ComboBoxItem Content="1GB" />
+                                                    <ComboBoxItem Content="2GB" />
+                                                    <ComboBoxItem Content="4GB" />
+                                                    <ComboBoxItem Content="8GB" />
+                                                    <ComboBoxItem Content="16GB" />
+                                                </ComboBox>
+                                            </Grid>
+                                        </Grid>
+                                    </ui:CardControl>
+                                    <ui:CardControl Grid.Row="1" Padding="20,10,20,10" Header="达到设置时间自动分割文件" Icon="{ui:SymbolIcon TimePicker24}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                                <ComboBox Name="CutAccordingToTime_For_ComboBox" Grid.Row="0" Grid.Column="1" SelectedIndex="{Binding CutAccordingToTime_For_ComboBox,Mode=OneWay}" Margin="0,0,5,0">
+                                                    <ComboBoxItem Content="不分割"/>
+                                                    <ComboBoxItem Content="10分钟" />
+                                                    <ComboBoxItem Content="20分钟" />
+                                                    <ComboBoxItem Content="30分钟" />
+                                                    <ComboBoxItem Content="1个小时" />
+                                                    <ComboBoxItem Content="2个小时" />
+                                                </ComboBox>
+                                            </Grid>
+                                        </Grid>
+                                    </ui:CardControl>
+                                </Grid>
+                            </StackPanel>
+                        </ui:CardExpander>
+                        <ui:CardControl Padding="15,20,20,20" Header="开始录制时保存当前直播间封面" Icon="{ui:SymbolIcon Image20}" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
+                                    <ui:ToggleSwitch Name="SaveCover_SwitchControl" IsChecked="{Binding _SaveCover, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
+                                </Grid>
+                            </Grid>
+                        </ui:CardControl>
+
+                    </StackPanel>
+                </ui:CardExpander>
+                <ui:CardExpander Grid.Row="4" Icon="{ui:SymbolIcon CalendarPlay20}">
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="播放窗设置" />
+                            <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="在线播放功能相关设置" />
+                        </Grid>
+                    </ui:CardExpander.Header>
+                    <StackPanel Margin="24,0,24,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                        </Grid>
+
+                        <ui:CardExpander Icon="{ui:SymbolIcon Chat20}">
+                            <ui:CardExpander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="播放窗弹幕" />
+                                        <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="针对标准播放窗口的弹幕相关设置内容" />
+                                    </Grid>
+
+                                </Grid>
+                            </ui:CardExpander.Header>
+                            <StackPanel Margin="24,0.5,24,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="0" Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Margin="10,0,0,0" Content="打开播放器时默认开关" />
+                                        <CheckBox Name="PlayWindowDanmaSwitch_CheckBox" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0" Content="默认打开弹幕" IsChecked="{Binding _PlayWindowDanmaSwitch, Mode=OneWay}"/>
+                                    </Grid>
+                                    <Grid Grid.Row="0" Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Margin="10,0,0,0" Content="弹幕字体大小" />
+                                        <ui:NumberBox Name="PlayWindowDanmaSize"  Grid.Row="1" Width="200" HorizontalAlignment="Left" Margin="10,0,0,0" PlaceholderText="15" Minimum="1" Maximum="100" Text="{Binding _PlayWindowDanmaFontSize, Mode=OneWay}"/>
+                                    </Grid>
+                                    <Grid Grid.Row="0" Grid.Column="2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Margin="10,0,0,0" Content="弹幕速度" />
+                                        <ui:NumberBox Name="PlayWindowDanmaSpeed_InputBox"  Grid.Row="1" Width="200" HorizontalAlignment="Left" Margin="10,0,0,0" PlaceholderText="15" Minimum="1" Maximum="100" Text="{Binding _PlayWindowDanmaSpeed, Mode=OneWay}"/>
+                                    </Grid>
+                                    <Grid Grid.Row="0" Grid.Column="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Margin="10,0,0,0" Content="弹幕速度是否跟随播放大小变化动态变化" />
+                                        <CheckBox Name="PlayWindowDanmaSpeed_CheckBox" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0" Content="跟随" IsChecked="{Binding _PlayDanmaSpeed_Dynamically, Mode=OneWay}"/>
+                                    </Grid>
+                                    
+                                  
+                                </Grid>
+                                
+                            </StackPanel>
+                        </ui:CardExpander>
+
+                    </StackPanel>
+
+                </ui:CardExpander>
+            </Grid>
+
+        </StackPanel>
+        <ContentPresenter x:Name="RootContentDialogPresenter" />
+    </Grid>
+</Page>

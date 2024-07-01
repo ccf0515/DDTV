@@ -1,0 +1,38 @@
+<Page
+    x:Class="Desktop.Views.Pages.LogPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Desktop.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="LogPage"
+    d:DesignHeight="650"
+    d:DesignWidth="1255"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <Grid Margin="42,10,42,10" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ui:TextBlock Name="LogTips" Margin="10,8,0,0"  FontSize="16" FontTypography="Body" HorizontalAlignment="Right"  Text="Log系统状态:记录中 tag标记:"/>
+        <ui:ListView Grid.Row="1" Margin="0,0,0,0" Name="LogView"  ItemsSource="{Binding LogCollection}" SelectedIndex="0" SelectionMode="Single" Background="{x:Null}" BorderBrush="{x:Null}">
+            <ui:ListView.View>
+                <ui:GridView>
+                    <ui:GridViewColumn MinWidth="70"  DisplayMemberBinding="{Binding Type}" Header="类型"/>
+                    <ui:GridViewColumn MinWidth="120"  DisplayMemberBinding="{Binding Time}" Header="时间"/>
+                    <ui:GridViewColumn MinWidth="150"  DisplayMemberBinding="{Binding Source}" Header="来源"/>
+                    <ui:GridViewColumn MinWidth="500" Width="Auto" DisplayMemberBinding="{Binding Message}" Header="消息"/>
+                </ui:GridView>
+            </ui:ListView.View>
+        </ui:ListView>
+    </Grid>
+</Page>
